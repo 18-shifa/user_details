@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center" style="font-size: 3rem;">DASHBOARD</h1>
+
+    <!-- Profile Section -->
+    <div class="profile-section mb-5" style="font-size:large">
+        <h2 class="section-title">PROFILE</h2>
+        <div class="profile">
+            <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+            <div class="profile-details">
+                <p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+                <p><strong>Website:</strong> <a href="{{ user_profile.website }}" target="_blank">{{ user_profile.website }}</a></p>
+                <p><strong>Skills:</strong> {{ user_profile.skills }}</p>
+                <p><strong>Contact Email:</strong> {{ user_profile.contact_email }}</p>
+                <p><strong>Phone Number:</strong> {{ user_profile.phone_number }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="projects-section mb-5">
+        <h2 class="section-title">PROJECTS</h2>
+        <ul class="list-group">
+            {% for project in projects %}
+            <li class="list-group-item">
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description }}</p>
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+                {% endif %}
+                {% if project.link %}
+                <p><a href="{{ project.link }}" target="_blank">Project Link</a></p>
+                {% endif %}
+            </li>
+            {% empty %}
+            <li class="list-group-item">No projects found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Work Experiences Section -->
+    <div class="work-experiences-section mb-5">
+        <h2 class="section-title">WORK EXPERIENCES</h2>
+        <ul class="list-group">
+            {% for experience in work_experiences %}
+            <li class="list-group-item">
+                <h3>{{ experience.title }} at {{ experience.company }}</h3>
+                <p>{{ experience.description }}</p>
+                <p>{{ experience.start_date }} - {% if experience.end_date %}{{ experience.end_date }}{% else %}Present{% endif %}</p>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No work experiences found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Education Section -->
+    <div class="education-section mb-5">
+        <h2 class="section-title">EDUCATION</h2>
+        <ul class="list-group">
+            {% for education in educations %}
+            <li class="list-group-item">
+                <h3>{{ education.degree }} in {{ education.field_of_study }}</h3>
+                <p>{{ education.institution }}</p>
+                <p>{{ education.start_date }} - {% if education.end_date %}{{ education.end_date }}{% else %}Present{% endif %}</p>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No education records found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Certifications Section -->
+    <div class="certifications-section">
+        <h2 class="section-title">CERTIFICATIONS</h2>
+        <ul class="list-group">
+            {% for certification in certifications %}
+            <li class="list-group-item">
+                <h3>{{ certification.title }}</h3>
+                <p>{{ certification.issuing_organization }}</p>
+                <p>{{ certification.description }}</p>
+                <p>Issued on: {{ certification.issue_date }}</p>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No certifications found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

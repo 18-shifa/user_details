@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Projects</h1>
+<a href="{% url 'project_create' %}" style="font-size:large">Add New Project</a>
+<ul>
+    {% for project in projects %}
+    <li>
+        <a href="{% url 'project_detail' project.pk %}" style="font-size:large">{{ project.title }}</a>
+        <a href="{% url 'project_update' project.pk %}" class="btn btn-info">Edit</a>
+        <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

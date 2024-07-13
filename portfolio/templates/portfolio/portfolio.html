@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Portfolio</h1>
+
+<h2>Work Experience</h2>
+<a href="{% url 'work_experience_create' %}" class="btn btn-primary mb-3">Add Work Experience</a>
+<ul class="list-group">
+    {% for experience in work_experiences %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5>{{ experience.title }} at {{ experience.company }}</h5>
+            <p>
+                {{ experience.start_date|date:"M Y" }} - {% if experience.end_date %}{{ experience.end_date|date:"M Y" }}{% else %}Present{% endif %}
+            </p>
+        </div>
+        <div class="btn-group" role="group">
+            <a href="{% url 'work_experience_edit' experience.pk %}" class="btn btn-sm btn-info">Edit</a>
+            <form action="{% url 'work_experience_delete' experience.pk %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Education</h2>
+<a href="{% url 'education_create' %}" class="btn btn-primary mb-3">Add Education</a>
+<ul class="list-group">
+    {% for education in educations %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5>{{ education.degree }} from {{ education.institution }}</h5>
+            <p>
+                {{ education.start_date|date:"M Y" }} - {% if education.end_date %}{{ education.end_date|date:"M Y" }}{% else %}Present{% endif %}
+            </p>
+        </div>
+        <div class="btn-group" role="group">
+            <a href="{% url 'education_edit' education.pk %}" class="btn btn-sm btn-info">Edit</a>
+            <form action="{% url 'education_delete' education.pk %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Certifications</h2>
+<a href="{% url 'certification_create' %}" class="btn btn-primary mb-3">Add Certification</a>
+<ul class="list-group">
+    {% for certification in certifications %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5>{{ certification.title }} from {{ certification.issuing_organization }}</h5>
+            <p>
+                {{ certification.issue_date|date:"M Y" }}
+            </p>
+        </div>
+        <div class="btn-group" role="group">
+            <a href="{% url 'certification_edit' certification.pk %}" class="btn btn-sm btn-info">Edit</a>
+            <form action="{% url 'certification_delete' certification.pk %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
